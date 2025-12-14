@@ -1,50 +1,88 @@
-# МАСТЕР РИТЕЙЛ Website Specification
+# МАСТЕР РИТЕЙЛ — Спецификация сайта
 
-## Project Overview
-A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — a Russian company specializing in retail branding, signage, printing, and trade space design.
+## Обзор проекта
 
-**Tech Stack:**
-- Next.js 16
-- Tailwind CSS 4
-- TypeScript
-- React 19
+Статический одностраничный сайт для **МАСТЕР РИТЕЙЛ** (Master Retail) — направления медиагруппы MASTER IN, специализирующегося на брендировании, вывесках, печати и оформлении торговых пространств.
 
-**Figma Design Sources:**
+---
+
+## Деплой и хостинг
+
+| Параметр | Значение |
+|----------|----------|
+| Репозиторий | https://github.com/gooditworks/masterin |
+| Продакшн URL | https://branding.master-in.ru/ |
+| Хостинг | Vercel |
+| Ветка деплоя | `main` |
+| Автодеплой | Да (при push в main) |
+
+### Static Export
+
+Проект поддерживает статическую сборку:
+
+```bash
+bun run export
+```
+
+Результат генерируется в папку `out/`. Конфигурация в `next.config.ts`:
+
+```typescript
+const nextConfig: NextConfig = {
+  ...(process.env.STATIC_EXPORT === "true" && { output: "export" }),
+};
+```
+
+---
+
+## Технологии
+
+| Технология | Версия |
+|------------|--------|
+| Next.js | 16 |
+| React | 19 |
+| Tailwind CSS | 4 |
+| TypeScript | 5 |
+
+**Figma-дизайн:**
 - Desktop: `node-id=1-3`
 - Mobile: `node-id=1-361`
 
 ---
 
-## Design Tokens
+## Дизайн-токены
 
-### Colors
-| Token | Hex | CSS Variable | Usage |
-|-------|-----|--------------|-------|
-| Primary Blue | `#0070db` | `--color-primary-blue` | Headlines accent, links, highlights |
-| Primary Orange | `#b45a06` | `--color-primary-orange` | CTA buttons |
-| Dark Navy | `#1e1f33` | `--color-dark-navy` | Gradient backgrounds, dark sections |
-| Background | `#fafaff` | `--color-background` | Page background |
-| Secondary | `#f3f4ff` | `--color-secondary` | Cards, light sections, footer |
-| White | `#ffffff` | `--color-white` | Content cards |
-| Black | `#000000` | `--color-black` | Body text |
-| Gray | `#ebebeb` | `--color-gray` | Secondary buttons, borders |
-| Light Border | `#e5e8ff` | `--color-light-border` | Dividers |
+### Цвета
 
-### Typography
-| Font | Weights | Usage |
-|------|---------|-------|
-| Unbounded | 500 (Medium), 700 (Bold), 800 (ExtraBold) | Headings, titles, buttons |
-| Inter | 300 (Light), 400 (Regular) | Body text, descriptions |
+| Токен | Hex | CSS-переменная | Использование |
+|-------|-----|----------------|---------------|
+| Primary Blue | `#0070db` | `--color-primary-blue` | Акценты заголовков, ссылки |
+| Primary Orange | `#b45a06` | `--color-primary-orange` | CTA-кнопки |
+| Dark Navy | `#1e1f33` | `--color-dark-navy` | Градиентные фоны, тёмные секции |
+| Background | `#fafaff` | `--color-background` | Фон страницы |
+| Secondary | `#f3f4ff` | `--color-secondary` | Карточки, светлые секции, футер |
+| White | `#ffffff` | `--color-white` | Карточки контента |
+| Black | `#000000` | `--color-black` | Основной текст |
+| Gray | `#ebebeb` | `--color-gray` | Вторичные кнопки, границы |
+| Light Border | `#e5e8ff` | `--color-light-border` | Разделители |
 
-### Border Radius
-| Size | Value | Usage |
-|------|-------|-------|
-| Small | `20px` | Small buttons, tags |
-| Medium | `30px` | Cards, inputs |
-| Large | `50px` | Large cards, sections |
-| Full | `73px` | Pill buttons |
+### Типографика
 
-### Shadows
+| Шрифт | Веса | Использование |
+|-------|------|---------------|
+| Unbounded | 500 (Medium), 700 (Bold), 800 (ExtraBold) | Заголовки, кнопки |
+| Inter | 300 (Light), 400 (Regular) | Основной текст, описания |
+
+### Скругления (Border Radius)
+
+| Размер | Значение | Использование |
+|--------|----------|---------------|
+| Small | `20px` | Маленькие кнопки, теги |
+| Medium | `30px` | Карточки, инпуты |
+| Large | `50px` | Большие карточки, секции |
+| Full | `73px` | Pill-кнопки |
+
+### Тени
+
 ```css
 --shadow-card: 4px 4px 20px 4px rgba(0, 0, 0, 0.08);
 --shadow-card-lg: 6.74px 6.74px 33.7px 6.74px rgba(0, 0, 0, 0.08);
@@ -52,173 +90,186 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 
 ---
 
-## Page Sections
+## Секции страницы
 
-### 1. Header
-- **Desktop:** Full navigation bar
-  - Logo (left)
-  - Nav links (all external to master-in.ru):
+### 1. Header (Шапка)
+
+- **Desktop:** Полная навигация
+  - Логотип (слева)
+  - Навигационные ссылки (внешние на master-in.ru):
     - О нас → https://master-in.ru/about/
     - Направления → https://master-in.ru/directions/
     - Медиацентр → https://master-in.ru/news/
     - Контакты → https://master-in.ru/contacts/
-  - Phone number: `8 (495) 255-06-07` (styled bold)
-  - CTA button: "Связаться с нами" (secondary style)
-- **Mobile:** Compact header
-  - Logo (left)
-  - Hamburger menu icon (right)
-  - Mobile menu overlay when open
-- **Sticky:** Yes, fixed on scroll
-- **Note:** This page is a standalone landing for "Оформление торговых пространств" direction
-- **All nav links:** Navigate to master-in.ru (same tab, no target="_blank")
+  - Телефон: `8 (495) 255-06-07` (жирный)
+  - CTA-кнопка: "Связаться с нами" (secondary)
+- **Mobile:** Компактная шапка
+  - Логотип (слева)
+  - Иконка бургер-меню (справа)
+  - Мобильное меню-оверлей при открытии
+- **Sticky:** Да, фиксируется при скролле
+- **Примечание:** Страница является отдельным лендингом для направления "Оформление торговых пространств"
+- **Все навигационные ссылки:** Открываются в той же вкладке (без target="_blank")
 
-### 2. Hero Section
-- **Headline:** "МАСТЕР РИТЕЙЛ БРЕНДИРОВАНИЕ И ОФОРМЛЕНИЕ ТОРГОВЫХ ПРОСТРАНСТВ"
-  - "МАСТЕР РИТЕЙЛ" in blue (#0070db)
-  - Rest in black
-- **Description:** Service overview text
-- **CTA Button:** "Связаться с нами" (orange)
-- **Side Cards:**
-  - "От макета до монтажа 48 часов" card
-  - "Оформляем" card with list (Точки продаж, Торговые сети, Торговые центры)
-- **Decorative:** Blue blob/wave shape in corner
+### 2. Hero (Главный экран)
 
-### 3. Services Section (НАШИ УСЛУГИ)
-- **Layout:** 2x3 grid (desktop), 1 column (mobile)
-- **Cards:** 6 service cards with:
-  - Background image
-  - Dark gradient overlay
-  - Service title (white)
-  - "Заказать проект" button
-- **Services:**
+- **Заголовок:** "МАСТЕР РИТЕЙЛ БРЕНДИРОВАНИЕ И ОФОРМЛЕНИЕ ТОРГОВЫХ ПРОСТРАНСТВ"
+  - "МАСТЕР РИТЕЙЛ" синим (#0070db)
+  - Остальное чёрным
+- **Описание:** Текст с описанием услуг
+- **CTA-кнопка:** "Связаться с нами" (оранжевая)
+- **Боковые карточки:**
+  - "От макета до монтажа 48 часов"
+  - "Оформляем" со списком (Точки продаж, Торговые сети, Торговые центры)
+- **Декор:** Синий градиентный блоб в углу
+
+### 3. Services (НАШИ УСЛУГИ)
+
+- **Лейаут:** Сетка 2x3 (desktop), 1 колонка (mobile)
+- **Карточки:** 6 карточек услуг с:
+  - Фоновым изображением
+  - Тёмным градиентным оверлеем
+  - Названием услуги (белый)
+  - Кнопкой "Заказать проект"
+- **Услуги:**
   1. Полиграфия офсетной и цифровой печатью
   2. УФ-печать на ПВХ
   3. Сальвентная печать на самоклеящейся пленке
   4. Световые вывески и LED экраны
   5. Баннеры любого размера
   6. Монтаж альпинистами любой сложности
-- **Footer:** "Больше услуг" button
+- **Внизу:** Кнопка "Больше услуг"
 
-### 4. Clients Carousel (НАШИ КЛИЕНТЫ)
-- **Background:** Navy-to-blue gradient (#1e1f33 → #0070db)
-- **Layout:** Horizontal scrolling carousel
-- **Cards:** White rounded cards with:
-  - Company logo/icon
-  - Company name
-  - Description text
-- **Clients:** Магнит, Пятёрочка, Обойкин, Сбербанк, Samsung, О'кей, Lichi
-- **Navigation:** Left/Right arrows
+### 4. Clients (НАШИ КЛИЕНТЫ)
 
-### 5. Advantages Section (ПРЕИМУЩЕСТВА РАБОТЫ С НАМИ)
-- **Layout:** 3 feature blocks
-- **Features:**
-  1. "От макета до монтажа за 48 часов" — with clock visualization
-  2. "Работаем в 97+ городах России" — with Russia map
-  3. "200+ материалов в наличии" — with materials image
-- **Each has:** Title, description, CTA button
+- **Фон:** Градиент navy-to-blue (#1e1f33 → #0070db)
+- **Лейаут:** Горизонтальная карусель
+- **Карточки:** Белые скруглённые карточки с:
+  - Логотипом/иконкой компании
+  - Названием компании
+  - Текстом описания
+- **Клиенты:** Магнит, Пятёрочка, Обойкин, Сбербанк, Samsung, О'кей, Lichi
+- **Навигация:** Стрелки влево/вправо
 
-### 6. Portfolio Carousel (НАШИ РАБОТЫ)
-- **Background:** Navy-to-blue gradient
-- **Layout:** Horizontal scrolling carousel
-- **Cards:** Project images with company name label
-- **Projects:** FAMILIA, ПЯТЕРОЧКА, ВСЕ ИНСТРУМЕНТЫ, ГАЛАМАРТ, SAMSUNG, СБЕРБАНК, ОБОЙКИН, ОКЕЙ, IPORT, LEOMALL, LICHI
-- **Navigation:** Left/Right arrows
+### 5. Advantages (ПРЕИМУЩЕСТВА РАБОТЫ С НАМИ)
 
-### 7. Contact Form Section
-- **Background:** Navy-to-blue gradient (rounded corners)
-- **Content:**
-  - Heading: "Оставьте заявку на консультацию и получите расчет стоимости"
-  - Description text
-  - Consultant card (photo, name: Анита Клименок, role)
-- **Form Fields:**
-  - Ваше Имя* (Name - text, required)
-  - Ваш E-mail* (Email - email, required)
-  - Тема обращения (Topic - dropdown select):
+- **Лейаут:** 3 блока преимуществ
+- **Преимущества:**
+  1. "От макета до монтажа за 48 часов" — с визуализацией часов
+  2. "Работаем в 97+ городах России" — с картой России
+  3. "200+ материалов в наличии" — с изображением материалов
+- **Каждый блок:** Заголовок, описание, CTA-кнопка
+
+### 6. Portfolio (НАШИ РАБОТЫ)
+
+- **Фон:** Градиент navy-to-blue
+- **Лейаут:** Горизонтальная карусель
+- **Карточки:** Изображения проектов с лейблом названия компании
+- **Проекты:** FAMILIA, ПЯТЕРОЧКА, ВСЕ ИНСТРУМЕНТЫ, ГАЛАМАРТ, SAMSUNG, СБЕРБАНК, ОБОЙКИН, ОКЕЙ, IPORT, LEOMALL, LICHI
+- **Навигация:** Стрелки влево/вправо
+
+### 7. ContactForm (Форма обратной связи)
+
+- **Фон:** Градиент navy-to-blue (скруглённые углы)
+- **Контент:**
+  - Заголовок: "Оставьте заявку на консультацию и получите расчет стоимости"
+  - Описание
+  - Карточка консультанта (фото, имя: Анита Клименок, должность)
+- **Поля формы:**
+  - Ваше Имя* (текст, обязательное)
+  - Ваш E-mail* (email, обязательное)
+  - Тема обращения (выпадающий список):
     - Предложение сотрудничества
     - Вопрос о размещении рекламы
     - Вопрос о расположении офиса
     - Сообщить об ошибке
     - Другое
-  - Ваше сообщение (Message - textarea)
-  - Privacy checkbox with link to https://master-in.ru/privacy/
-  - Submit button: "Отправить заявку"
+  - Ваше сообщение (textarea)
+  - Чекбокс согласия с политикой конфиденциальности (ссылка на https://master-in.ru/privacy/)
+  - Кнопка "Отправить заявку"
 
-### 8. How We Work (КАК МЫ РАБОТАЕМ)
-- **Layout:** 5 vertical step cards
-- **Each Step:**
-  - Large number (1-5) as background watermark
-  - Step title (bold)
-  - Step description
-- **Steps:**
+### 8. HowWeWork (КАК МЫ РАБОТАЕМ)
+
+- **Лейаут:** 5 вертикальных карточек-шагов
+- **Каждый шаг:**
+  - Большой номер (1-5) как фоновый watermark
+  - Заголовок шага (жирный)
+  - Описание шага
+- **Шаги:**
   1. Консультация и расчёт стоимости
   2. Первичный макет
   3. Процесс изготовления
   4. Доставка на объект и монтаж
   5. Поддержка и гарантийное обслуживание
 
-### 9. FAQ Section (ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ)
-- **Layout:** Accordion list
-- **Behavior:** Click to expand/collapse
-- **Items:** 7 FAQ questions with answers
-- **Styling:** White cards with arrow icons
+### 9. FAQ (ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ)
 
-### 10. Contacts Section (КОНТАКТЫ)
-- **Layout:** 2 columns (info + map)
-- **Info Card:**
-  - Heading: "КОНТАКТЫ"
-  - Address: Санкт-Петербург, ул. Миллионная, д. 6, оф. 104
-  - Phone: 8 (800) 755-50-76
-  - Реквизиты link
+- **Лейаут:** Список-аккордеон
+- **Поведение:** Клик для раскрытия/скрытия
+- **Элементы:** 7 вопросов с ответами
+- **Стилизация:** Белые карточки с иконками стрелок
+
+### 10. Contacts (КОНТАКТЫ)
+
+- **Лейаут:** 2 колонки (информация + карта)
+- **Информационная карточка:**
+  - Заголовок: "КОНТАКТЫ"
+  - Адрес: Санкт-Петербург, ул. Миллионная, д. 6, оф. 104
+  - Телефон: 8 (800) 755-50-76
+  - Ссылка "Реквизиты"
   - Email: zakaz@o-tochka.ru
-  - "Построить маршрут" button
-  - "Связаться с нами" CTA button
-- **Map:** Interactive map placeholder/image
+  - Кнопка "Построить маршрут"
+  - CTA-кнопка "Связаться с нами"
+- **Карта:** Интерактивная карта / изображение
 
-### 11. Footer
-- **Background:** Light (#f3f4ff)
-- **Layout:** Multi-column
-- **Columns:**
-  - Logo
-  - О нас: О компании, Партнерам (links to master-in.ru)
-  - Направления: (list of services, all link to https://master-in.ru/directions/)
-  - Медиацентр: Новости, Пресс-релизы (link to https://master-in.ru/news/)
-  - Контакты: Phone (clickable tel: link), CTA button (links to https://master-in.ru/contacts/)
-- **Bottom Bar:**
-  - Copyright: © 2025 Медиа Группа Мастер Ин
-  - Privacy policy link → https://master-in.ru/privacy/
-- **All external links:** Navigate to master-in.ru (same tab)
+### 11. Footer (Подвал)
 
----
-
-## Responsive Breakpoints
-
-| Breakpoint | Width | Notes |
-|------------|-------|-------|
-| Mobile | < 768px | Single column, hamburger menu |
-| Tablet | 768px - 1280px | 2 columns where applicable, hamburger menu |
-| Desktop | > 1280px (xl) | Full layout with desktop navigation |
-| Large Desktop | > 1440px | Max container width 1786px |
-
-**Note:** Desktop navigation (full menu with links) only shows at xl (1280px+) to prevent cramped layouts on medium screens.
+- **Фон:** Светлый (#f3f4ff)
+- **Лейаут:** Многоколоночный
+- **Колонки:**
+  - Логотип
+  - О нас: О компании, Партнерам (ссылки на master-in.ru)
+  - Направления: (список услуг, все ведут на https://master-in.ru/directions/)
+  - Медиацентр: Новости, Пресс-релизы (ссылка на https://master-in.ru/news/)
+  - Контакты: Телефон (кликабельный tel:), CTA-кнопка (ведёт на https://master-in.ru/contacts/)
+- **Нижняя строка:**
+  - Копирайт: © 2025 Медиа Группа Мастер Ин
+  - Ссылка на политику конфиденциальности → https://master-in.ru/privacy/
+- **Все внешние ссылки:** Открываются в той же вкладке
 
 ---
 
-## Components List
+## Адаптивные брейкпоинты
 
-### Shared Components
-- [x] `Button` — Primary (orange), Secondary (light), Text variants
-- [x] `Header` — With mobile menu
+| Брейкпоинт | Ширина | Примечания |
+|------------|--------|------------|
+| Mobile | < 768px | Одна колонка, бургер-меню |
+| Tablet | 768px - 1280px | 2 колонки где применимо, бургер-меню |
+| Desktop | > 1280px (xl) | Полный лейаут с десктопной навигацией |
+| Large Desktop | > 1440px | Максимальная ширина контейнера 1786px |
+
+**Примечание:** Десктопная навигация (полное меню со ссылками) отображается только от xl (1280px+) для предотвращения сжатых лейаутов на средних экранах.
+
+---
+
+## Список компонентов
+
+### Общие компоненты
+
+- [x] `Button` — Primary (оранжевая), Secondary (светлая), Text варианты
+- [x] `Header` — С мобильным меню
 - [x] `Footer`
 - [x] `Icons` — Phone, Location, Arrow, Menu, Close, Chevron
-- [x] `ContactModal` — Popup form for "Связаться с нами" buttons
-- [x] `ContactModalContext` — React context to control modal state globally
+- [x] `ContactModal` — Popup-форма для кнопок "Связаться с нами"
+- [x] `ContactModalContext` — React-контекст для глобального управления модалкой
 
-### Section Components
+### Секционные компоненты
+
 - [x] `Hero`
 - [x] `ServiceCard` + `Services`
-- [x] `ClientCard` + `Clients` (carousel)
+- [x] `ClientCard` + `Clients` (карусель)
 - [x] `Advantages`
-- [x] `PortfolioCard` + `Portfolio` (carousel)
+- [x] `PortfolioCard` + `Portfolio` (карусель)
 - [x] `ContactForm`
 - [x] `ProcessStep` + `HowWeWork`
 - [x] `FAQItem` + `FAQ`
@@ -226,67 +277,71 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 
 ---
 
-## Assets Required
+## Необходимые ассеты
 
-### Images (exported from Figma)
-- Logo: `/images/logo.png` — MASTER IN медиагруппа with curved arc
-- Map: `/images/map.png` — Static map of Saint Petersburg with "ОСОБАЯ ТОЧКА" marker
-- Service images (6)
-- Client logos (7+)
-- Portfolio project images (11+)
-- Russia map illustration
-- Materials showcase image
-- Consultant photo
+### Изображения (экспорт из Figma)
 
-### Decorative Assets
-- `/decorative-blob.svg` — Gradient blob (dark navy to blue) for Hero section background
-- `/dots-pattern.svg` — Scattered blue dots pattern for "48 hours" card decoration
+- Логотип: `/images/logo.png` — MASTER IN медиагруппа с изогнутой дугой
+- Карта: `/images/map.png` — Статическая карта Санкт-Петербурга с маркером "ОСОБАЯ ТОЧКА"
+- Изображения услуг (6)
+- Логотипы клиентов (7+)
+- Изображения проектов портфолио (11+)
+- Иллюстрация карты России
+- Изображение витрины материалов
+- Фото консультанта
 
-### Icons
-- Phone icon
-- Location icon
-- Arrow right (circle)
-- Hamburger menu
-- Close (X)
-- Chevron down (FAQ)
+### Декоративные ассеты
 
----
+- `/decorative-blob.svg` — Градиентный блоб (dark navy → blue) для фона Hero
+- `/dots-pattern.svg` — Паттерн разбросанных синих точек для карточки "48 часов"
 
-## Implementation Status
+### Иконки
 
-| Section | Desktop | Mobile | Status |
-|---------|---------|--------|--------|
-| Header | ✅ | ✅ | Completed |
-| Hero | ✅ | ✅ | Completed |
-| Services | ✅ | ✅ | Completed |
-| Clients Carousel | ✅ | ✅ | Completed |
-| Advantages | ✅ | ✅ | Completed |
-| Portfolio Carousel | ✅ | ✅ | Completed |
-| Contact Form | ✅ | ✅ | Completed |
-| How We Work | ✅ | ✅ | Completed |
-| FAQ | ✅ | ✅ | Completed |
-| Contacts | ✅ | ✅ | Completed |
-| Footer | ✅ | ✅ | Completed |
+- Телефон
+- Локация
+- Стрелка вправо (круглая)
+- Бургер-меню
+- Закрыть (X)
+- Chevron вниз (FAQ)
 
 ---
 
-## Notes & Decisions
-- Using Next.js App Router
-- Static export for deployment: run `bun run export` to generate static files in `out/` folder
-- Placeholder images from Unsplash until assets exported from Figma
-- Russian language content (UTF-8)
-- Fonts: Unbounded (headings) + Inter (body) from Google Fonts
-- Tailwind CSS 4 with custom CSS variables for design tokens
-- Responsive breakpoints: mobile-first approach with md (768px) and lg (1024px)
-- Carousels implemented with native scroll + arrow navigation
-- FAQ accordion with single-open behavior
-- Hero section includes decorative gradient blob (rotated 121.253deg, clipped by container) and scattered dots pattern in "48 hours" card
+## Статус реализации
 
-### Integration with master-in.ru
-- **This page is a standalone landing** for the "Оформление торговых пространств" direction
-- Phone number: `8 (495) 255-06-07` (Moscow area code, matching real site)
-- **All navigation links** point to master-in.ru (О нас, Направления, Медиацентр, Контакты)
-- Footer links point to real master-in.ru URLs
-- Contact form matches real site fields (Name, Email, Topic dropdown, Message)
-- Privacy policy and other legal links point to master-in.ru
+| Секция | Desktop | Mobile | Статус |
+|--------|---------|--------|--------|
+| Header | ✅ | ✅ | Готово |
+| Hero | ✅ | ✅ | Готово |
+| Services | ✅ | ✅ | Готово |
+| Clients Carousel | ✅ | ✅ | Готово |
+| Advantages | ✅ | ✅ | Готово |
+| Portfolio Carousel | ✅ | ✅ | Готово |
+| Contact Form | ✅ | ✅ | Готово |
+| How We Work | ✅ | ✅ | Готово |
+| FAQ | ✅ | ✅ | Готово |
+| Contacts | ✅ | ✅ | Готово |
+| Footer | ✅ | ✅ | Готово |
 
+---
+
+## Заметки и решения
+
+- Используется Next.js App Router
+- Статический экспорт для деплоя: команда `bun run export` генерирует статические файлы в папку `out/`
+- Placeholder-изображения с Unsplash до экспорта ассетов из Figma
+- Контент на русском языке (UTF-8)
+- Шрифты: Unbounded (заголовки) + Inter (текст) из Google Fonts
+- Tailwind CSS 4 с кастомными CSS-переменными для дизайн-токенов
+- Адаптивные брейкпоинты: mobile-first подход с md (768px) и lg (1024px)
+- Карусели реализованы на нативном скролле + стрелочная навигация
+- FAQ-аккордеон с поведением single-open (открыт только один элемент)
+- Hero-секция включает декоративный градиентный блоб (повёрнут на 121.253deg, обрезается контейнером) и паттерн точек в карточке "48 часов"
+
+### Интеграция с master-in.ru
+
+- **Эта страница — отдельный лендинг** для направления "Оформление торговых пространств"
+- Телефон: `8 (495) 255-06-07` (московский код, соответствует реальному сайту)
+- **Все навигационные ссылки** ведут на master-in.ru (О нас, Направления, Медиацентр, Контакты)
+- Ссылки футера ведут на реальные URL master-in.ru
+- Форма обратной связи соответствует полям реального сайта (Имя, Email, Тема, Сообщение)
+- Политика конфиденциальности и другие юридические ссылки ведут на master-in.ru
