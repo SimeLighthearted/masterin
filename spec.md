@@ -210,6 +210,8 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 - [x] `Header` — With mobile menu
 - [x] `Footer`
 - [x] `Icons` — Phone, Location, Arrow, Menu, Close, Chevron
+- [x] `ContactModal` — Popup form for "Связаться с нами" buttons
+- [x] `ContactModalContext` — React context to control modal state globally
 
 ### Section Components
 - [x] `Hero`
@@ -235,6 +237,10 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 - Russia map illustration
 - Materials showcase image
 - Consultant photo
+
+### Decorative Assets
+- `/decorative-blob.svg` — Gradient blob (dark navy to blue) for Hero section background
+- `/dots-pattern.svg` — Scattered blue dots pattern for "48 hours" card decoration
 
 ### Icons
 - Phone icon
@@ -266,7 +272,7 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 
 ## Notes & Decisions
 - Using Next.js App Router
-- Static export for deployment
+- Static export for deployment: run `bun run export` to generate static files in `out/` folder
 - Placeholder images from Unsplash until assets exported from Figma
 - Russian language content (UTF-8)
 - Fonts: Unbounded (headings) + Inter (body) from Google Fonts
@@ -274,6 +280,7 @@ A static one-page website for **МАСТЕР РИТЕЙЛ** (Master Retail) — 
 - Responsive breakpoints: mobile-first approach with md (768px) and lg (1024px)
 - Carousels implemented with native scroll + arrow navigation
 - FAQ accordion with single-open behavior
+- Hero section includes decorative gradient blob (rotated 121.253deg, clipped by container) and scattered dots pattern in "48 hours" card
 
 ### Integration with master-in.ru
 - **This page is a standalone landing** for the "Оформление торговых пространств" direction
